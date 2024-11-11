@@ -4,6 +4,8 @@ import { ITodo } from "./redux/reduxs/productStore";
 type RootStackParamList = {
      Page1: undefined;
     Page2: undefined;
+    Page3: { data: Product };
+     Page4: undefined;
 }
 
 declare global {

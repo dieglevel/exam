@@ -16,6 +16,8 @@ import { Provider } from 'react-redux';
 import { store } from '@/types/redux/store';
 import Page1 from '../Page1';
 import Page2 from '../Page2';
+import Page3 from '../Page3';
+import Page4 from '../Page4';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -27,12 +29,14 @@ export default function HomeScreen() {
   return (
      <View style={{ flex: 1, marginTop: -32 }}>
         <Provider store={store}>
-              <NavigationContainer independent={true}>
-                 <Stack.Navigator initialRouteName="Page2">
-                    <Stack.Screen name="Page1" component={Page1} />
-                    <Stack.Screen name="Page2" component={Page2} />
-                 </Stack.Navigator>
-              </NavigationContainer>
+           <NavigationContainer independent={true}>
+              <Stack.Navigator initialRouteName="Page4">
+                 <Stack.Screen name="Page1" component={Page1} />
+                 <Stack.Screen name="Page2" component={Page2} />
+                 <Stack.Screen name="Page3" component={Page3} />
+                 <Stack.Screen name="Page4" component={Page4} />
+              </Stack.Navigator>
+           </NavigationContainer>
         </Provider>
      </View>
   );

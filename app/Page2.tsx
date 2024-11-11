@@ -3,8 +3,10 @@ import {
    productsStore,
    setProducts,
 } from "@/types/redux/reduxs/productsStotre";
+import { HomeScreenNavigationProp } from "@/types/route";
 import { useAppDispatch, useAppSelector } from "@/types/typeRedux";
 import axios from "axios";
+import { useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -22,6 +24,8 @@ export const Page2 = () => {
    const data = useAppSelector(productsStore);
    const dispatch = useAppDispatch();
 
+   const navigation = useNavigation<HomeScreenNavigationProp>();
+
    useEffect(() => {
       const getdata = async () => {
          const response = await axios.get(
@@ -29,15 +33,34 @@ export const Page2 = () => {
          );
          return response.data;
       };
-      // getdata().then((data) => {
-      //    dispatch(setProducts(data));
-      // });
+      getdata().then((data) => {
+         dispatch(setProducts(data));
+      });
    }, [dispatch]);
 
    return (
       <View
          style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}
       >
+         <Pressable
+         onPress={() => navigation.navigate("Page4")}
+            style={{
+               backgroundColor: "red",
+               padding: 10,
+               borderRadius: 10,
+               margin: 10,
+            }}
+         >
+            <Text
+               style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  textAlign: "center",
+               }}
+            >
+               Add new products
+            </Text>
+         </Pressable>
          <View>
             <Text
                style={{
@@ -102,19 +125,39 @@ interface ItemProps {
 }
 
 const Item = ({ data }: ItemProps) => {
+   const navigation = useNavigation<HomeScreenNavigationProp>();
+   
+   const checkImage = (images: string) => {
+      switch (images) {
+         case "1":
+            return image.xe1;
+         case "2":
+            return image.xe2;
+         case "3":
+            return image.xe3;
+         case "4":
+            return image.xe4;
+         case "5":
+            return image.xe5;
+         case "6":
+            return image.xe6;
+         default:
+            return image.xe1;
+      }
+   };
    return (
-      <View
-         style={{ backgroundColor: "#F7BA8326", padding: 20, borderRadius: 16, margin: 10 }}
+      <Pressable onPress={() => navigation.navigate("Page3", { data })}
+         style={{ width: "45%", backgroundColor: "#F7BA8326", padding: 20, borderRadius: 16, margin: 10 }}
       >
-         <Image source={image.xe1} style={{ width: 110, height: 100 }}></Image>
+         <Image source={checkImage(data.image) } style={{ width: 110, height: 100 }}></Image>
          <Text style={{ fontWeight: "bold", fontSize: 32, color: "gray" }}>
-            hkjlk
+            {data.name}
          </Text>
          <View style={{ flexDirection: "row" }}>
             <Text style={{ color: "orange" }}>$ </Text>
-            <Text>203000</Text>
+            <Text>{data.price}</Text>
          </View>
-      </View>
+      </Pressable>
    );
 };
 
