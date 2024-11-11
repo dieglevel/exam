@@ -3,13 +3,10 @@ import { Image, StyleSheet, Platform, View, Text, TouchableOpacity, Pressable, S
 import { NavigationContainer, NavigationProp, TabRouter, useNavigation, useNavigationBuilder } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types/route';
-import { bi_cart_check, goBack, search } from '@/assets/images';
-
 import CountComponent from './hook/useReducer/countComponent';
 
 import { Button } from 'react-native-paper';
 import { createContext, useState } from 'react';
-import { Context, IContextData, IContextDataProps } from '@/types/context/context';
 
 
 
@@ -18,63 +15,26 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Provider } from 'react-redux';
 import { store } from '@/types/redux/store';
 import Page1 from '../Page1';
+import Page2 from '../Page2';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const CustomHeader = () => {
-  const navigation: NavigationProp<RootStackParamList> = useNavigation();
-  return (
-    <View style={{ alignItems: 'center', marginTop: 30, backgroundColor: "rgba(27, 169, 255, 1)", width: "100%", flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 12 }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}><Image source={goBack}></Image></TouchableOpacity>
-      <Text style={{ color: "white", fontSize: 30 }}>Chat</Text>
-      <Image source={bi_cart_check}></Image>
-    </View>
-  );
-};
-
-const CustomHeader2 = () => {
-  const navigation: NavigationProp<RootStackParamList> = useNavigation();
-  return (
-    <View style={{ alignItems: 'center', marginTop: 30, backgroundColor: "rgba(27, 169, 255, 1)", width: "100%", flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 12 }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}><Image source={goBack}></Image></TouchableOpacity>
-      <TouchableOpacity style={{ backgroundColor: "white", flexDirection: "row", gap: 10, padding: 10, width: "55%", justifyContent: "flex-start", alignItems: 'center' }}>
-        <Image source={search}></Image>
-        <Text>Dây cáp usb</Text>
-      </TouchableOpacity>
-      <Image source={bi_cart_check}></Image>
-      <Text style={{ color: "white", fontWeight: "bold", fontSize: 30, marginBottom: 10 }}>...</Text>
-    </View>
-  );
-};
 
 export default function HomeScreen() {
-  const [contextData, setContextData] = useState<IContextData>({
-    title: "Hello Context",
-    name: "Thử nghiệm Context"
-  })
 
-  const contextProvider: IContextDataProps = {
-    data: contextData,
-    setData: (data: IContextData) => {
-      setContextData(data);
-    }
-  }
 
   return (
-
-    <View style={{ flex: 1, marginTop: -32 }}>
-      <Provider store={store}>
-      <Context.Provider value={contextProvider}>
-        <NavigationContainer independent={true} >
-          <Stack.Navigator initialRouteName='Page1'>
-            <Stack.Screen name="Page1" component={Page1} />
-
-          </Stack.Navigator>
-        </NavigationContainer>
-      </Context.Provider>
-      </Provider>
-    </View>
+     <View style={{ flex: 1, marginTop: -32 }}>
+        <Provider store={store}>
+              <NavigationContainer independent={true}>
+                 <Stack.Navigator initialRouteName="Page2">
+                    <Stack.Screen name="Page1" component={Page1} />
+                    <Stack.Screen name="Page2" component={Page2} />
+                 </Stack.Navigator>
+              </NavigationContainer>
+        </Provider>
+     </View>
   );
 }
 
